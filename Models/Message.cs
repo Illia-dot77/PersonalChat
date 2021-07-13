@@ -16,5 +16,10 @@ namespace PersonalChat.Models
         public DateTime Time { get; set; }
         public string UserId { get; set; }
         public virtual ChatUser Sender { get; set; }
+
+        public Message()
+        {
+            Time = DateTime.Now;
+        }
     }
 }

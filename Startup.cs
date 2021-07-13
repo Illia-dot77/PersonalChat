@@ -58,21 +58,17 @@ namespace PersonalChat
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseEndpoints(endpoints => 
-            {
-                endpoints.MapHub<ChatHub>("/Home/Index");
-            });
-
             app.UseRouting();
-
-            app.UseAuthorization();           
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/Home/Index");
             });
         }
     }
