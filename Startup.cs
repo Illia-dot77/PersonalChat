@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PersonalChat.Data;
+using PersonalChat.Hubs;
+using PersonalChat.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,9 +34,11 @@ namespace PersonalChat
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ChatUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,10 +58,14 @@ namespace PersonalChat
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseEndpoints(endpoints => 
+            {
+                endpoints.MapHub<ChatHub>("/Home/Index");
+            });
+
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseAuthorization();           
 
             app.UseEndpoints(endpoints =>
             {

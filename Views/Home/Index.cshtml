@@ -1,8 +1,15 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<PersonalChat.Models.Message>
+@{ 
+    ViewData["Title"] = "Personal Chat";
+    var userName = User.Identity.Name;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="jumbotron bg-light">
+    <h2 class="text-center text-primary">Personal Chat</h2>
+
+    <div class="row">
+        <div id="chat" class="col-md-12">
+
+        </div>
+    </div>
 </div>
