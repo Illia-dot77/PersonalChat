@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PersonalChat.Models
 {
+    /// <summary>
+    /// Message class that represent messages using in this application
+    /// </summary>
     public class Message
     {
         public int Id { get; set; }
@@ -17,6 +20,9 @@ namespace PersonalChat.Models
         public string UserId { get; set; }
         public virtual ChatUser Sender { get; set; }
 
+        /// <summary>
+        /// Message default constructor that set Time field
+        /// </summary>
         public Message()
         {
             Time = DateTime.Now;

@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace PersonalChat.Controllers
 {
+    /// <summary>
+    /// Main controller class in this application
+    /// </summary>
     [Authorize]
     public class HomeController : Controller
     {
@@ -23,6 +26,17 @@ namespace PersonalChat.Controllers
         private readonly ApplicationDbContext _context;
         private  readonly IHubContext<ChatHub> _hubContext;
 
+        /// <summary>
+        /// Default constructor of HomeController
+        /// </summary>
+        /// <param name="context">Parametr to setup database context in this class with dependency injection
+        /// </param>
+        /// <param name="logger">Parametr to setup logger object in this class with dependency injection
+        /// </param>
+        /// <param name="userManager">Parametr to setup user manager in this class with dependency injection
+        /// </param>
+        /// <param name="hubcontext">Parametr to setup hub context in this class with dependency injection
+        /// </param>
         public HomeController(ApplicationDbContext context, ILogger<HomeController> logger, 
             UserManager<ChatUser> userManager, IHubContext<ChatHub> hubcontext)
         {
@@ -31,7 +45,9 @@ namespace PersonalChat.Controllers
             _context = context;
             _hubContext = hubcontext;
         }
-
+        /// <summary>
+        /// Method that return main page of the application with chat history
+        /// </summary>
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -42,7 +58,11 @@ namespace PersonalChat.Controllers
             var messages = await _context.Messages.ToListAsync();
             return View(messages);
         }
-
+        /// <summary>
+        /// Method that catch message object from client-side and save it to the database
+        /// </summary>
+        /// <param name="message">Message type object that represent message to save
+        /// </param>
         public async Task <IActionResult> Create(Message message)
         {
             if (ModelState.IsValid)
@@ -59,7 +79,9 @@ namespace PersonalChat.Controllers
                 return Error();
             }
         }
-
+        /// <summary>
+        /// Method to send error whe something go wrong
+        /// </summary>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
